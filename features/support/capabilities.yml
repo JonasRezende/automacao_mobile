@@ -1,0 +1,15 @@
+caps:
+  app: "./app-dev-release.apk" 
+  platformName: "Android"
+  deviceName: "Anonymous"
+  appActivity: "com.unimed.app.oneplace.MainActivity"
+  appWaitActivity: "com.unimed.app.oneplace.MainActivity"
+  automationName: "UiAutomator2"
+  autoGrantPermissions: true
+  avdArgs: "-no-window"
+  newCommandTimeout: 3600
+  autoGrantPermissions: true
+  autoAcceptAlerts: true
+  resetKeyboard: true
+  
+

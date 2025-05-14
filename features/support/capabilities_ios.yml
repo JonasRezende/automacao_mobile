@@ -1,0 +1,7 @@
+caps:
+  app: "./product_oneplace-.ipa"
+  platformName: "iOS"
+  deviceName: "iPhone 14"
+  automationName: "XCUITest"
+  platformVersion: "16.4"
+  autoAcceptAlerts: true
