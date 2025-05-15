@@ -9,8 +9,8 @@ class LoginScreen < Utils
     @card_option = 'REG-PP-PJ-AMBHOSP-OBST-RB-E-PART-UNICOS-COLABORADOR-UNIMED'
 
     @cpf_bounds = { x: 540, y: 1600 }
-    @password_bounds = { x: 540, y: 843 }
-    @enter_bounds = { x: 958, y: 1953 } # ✅ bounds corrigidos do botão ENTER
+    @password_bounds = { x: 540, y: 1606 } # ✅ CORRIGIDO com base em [63,1528][1017,1684]
+    @enter_bounds = { x: 958, y: 1953 }
   end
 
   def open_access_options
@@ -84,11 +84,6 @@ class LoginScreen < Utils
     puts "✅ Tocando no botão ENTER (para efetuar login)"
     tocar_por_coordenada(@enter_bounds[:x], @enter_bounds[:y])
     sleep 2
-  end
-
-  def press_enter
-    puts "Clicando no botão ENTER"
-    tocar_por_coordenada(@enter_bounds[:x], @enter_bounds[:y])
   end
 
   def select_card
