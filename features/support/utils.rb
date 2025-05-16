@@ -71,4 +71,14 @@ class Utils
     find_elements(:id, element).size > 0
   end
 
+  # 🔧 Toque absoluto por coordenada (sem associar a elementos)
+  def tocar_por_coordenada(x, y)
+    puts "Tocando na coordenada: x=#{x}, y=#{y}"
+    $driver.execute_script('mobile: clickGesture', {
+      x: x,
+      y: y,
+      elementId: nil
+    })
+  end
+
 end

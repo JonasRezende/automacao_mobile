@@ -8,8 +8,9 @@ class LoginScreen < Utils
     @cancel_button = 'Cancelar'
     @card_option = 'REG-PP-PJ-AMBHOSP-OBST-RB-E-PART-UNICOS-COLABORADOR-UNIMED'
 
+    # Coordenadas dos elementos clicáveis
     @cpf_bounds = { x: 540, y: 1600 }
-    @password_bounds = { x: 540, y: 1606 } # ✅ CORRIGIDO com base em [63,1528][1017,1684]
+    @password_bounds = { x: 540, y: 1606 } # baseado nos bounds [63,1528][1017,1684]
     @enter_bounds = { x: 958, y: 1953 }
   end
 
@@ -26,7 +27,7 @@ class LoginScreen < Utils
   def access_app
     wait_for_element(@access_app, 10, :accessibility_id)
     find_element(accessibility_id: @access_app).click
-    sleep 3
+    sleep 3 # aguarda transição para a tela de login
   end
 
   def fill_cpf(cpf)
@@ -86,10 +87,27 @@ class LoginScreen < Utils
     sleep 2
   end
 
+  # 🪪 Seleciona uma carteirinha após o login
   def select_card
-    puts "Selecionando carteirinha"
-    wait_for_element_partial_desc(@card_option)
-    find_element(:xpath, "//*[contains(@content-desc, '#{@card_option}')]").click
+    puts "🪪 Aguardando a carteirinha aparecer..."
+    wait_for_element_partial_desc(@card_option, 15)
+
+    sleep 2 # ⏳ tempo adicional para estabilidade da UI
+
+    puts "✅ Buscando elemento da carteirinha na tela..."
+    begin
+      elementos = find_elements(:xpath, "//*[contains(@content-desc, '#{@card_option}')]")
+
+      if elementos.empty?
+        raise "❌ Nenhuma carteirinha encontrada com o content-desc esperado."
+      end
+
+      puts "🟢 Clicando na primeira carteirinha encontrada..."
+      elementos.first.click
+    rescue => e
+      puts "❌ Erro ao tentar clicar na carteirinha: #{e.message}"
+      raise "Erro ao selecionar carteirinha: #{e.message}"
+    end
   end
 
   def cancel_card_selection
@@ -105,8 +123,10 @@ class LoginScreen < Utils
   def disable_card
     puts "Clicando em Não Habilitar"
     find_element(accessibility_id: @disable_card).click
+    sleep 2  # ⏳ Dá tempo da interface carregar a carteirinha antes de tentar clicar
   end
 
+  # 🔧 Toque absoluto por coordenada (sem associar a elementos)
   def tocar_por_coordenada(x, y)
     puts "Tocando na coordenada: x=#{x}, y=#{y}"
     $driver.execute_script('mobile: clickGesture', {
@@ -116,6 +136,7 @@ class LoginScreen < Utils
     })
   end
 
+  # 🔍 Espera um campo EditText (input) ser visível
   def esperar_edit_text(timeout: 10)
     Selenium::WebDriver::Wait.new(timeout: timeout).until do
       edit_texts = find_elements(:class, 'android.widget.EditText')
@@ -125,12 +146,14 @@ class LoginScreen < Utils
     raise "❌ Campo de texto não encontrado após #{timeout}s."
   end
 
+  # 🔍 Aguarda um elemento com parte do content-desc visível
   def wait_for_element_partial_desc(text, timeout = 10)
     Selenium::WebDriver::Wait.new(timeout: timeout).until {
       find_elements(:xpath, "//*[contains(@content-desc, '#{text}')]").any?
     }
   end
 
+  # 🔍 Espera qualquer elemento com :id ou :accessibility_id visível
   def wait_for_element(id, timeout = 10, type = :accessibility_id)
     Selenium::WebDriver::Wait.new(timeout: timeout).until {
       case type
@@ -138,6 +161,8 @@ class LoginScreen < Utils
         find_element(accessibility_id: id).displayed?
       when :id
         find_element(id: id).displayed?
+      when :xpath
+        find_element(xpath: id).displayed?
       end
     }
   end

@@ -1,4 +1,4 @@
 default: --format pretty
 
-android_qa: --require features --tags @login features/bdd
-android_prod: --require features --tags @login features/bdd
+android_qa: --require features --format pretty features/bdd
+android_prod: --require features --format pretty features/bdd

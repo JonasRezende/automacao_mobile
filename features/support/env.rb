@@ -39,3 +39,5 @@ Appium.promote_appium_methods Object
 
 # Deixa o módulo Actions acessível nos steps
 World(Actions)
+
+

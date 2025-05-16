@@ -1,23 +1,16 @@
 class LoginAssert < Utils
   def initialize
-    @home_bounds_xpath = "//*[@bounds='[0,0][1080,2076]']"
+    # XPath baseado no bounds visível da tela inicial
+    @home_bounds_xpath = "//*[@bounds='[0,722][1080,753]']"
   end
 
   def check_home
     puts "🔍 Verificando se chegou à tela inicial com XPath por bounds..."
-    wait_for_element_by_xpath(@home_bounds_xpath, 10)
-    expect(element_is_present_by_xpath?(@home_bounds_xpath)).to be_truthy
-  end
-
-  private
-
-  def wait_for_element_by_xpath(xpath, timeout = 10)
-    Selenium::WebDriver::Wait.new(timeout: timeout).until {
-      !find_elements(:xpath, xpath).empty?
-    }
-  end
-
-  def element_is_present_by_xpath?(xpath)
-    !find_elements(:xpath, xpath).empty?
+    begin
+      wait_for_element(@home_bounds_xpath, 10, :xpath)
+      expect(find_element(:xpath, @home_bounds_xpath)).to be_truthy
+    rescue => e
+      raise "❌ Não foi possível confirmar a chegada na tela inicial: #{e.message}"
+    end
   end
 end

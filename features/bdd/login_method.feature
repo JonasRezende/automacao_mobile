@@ -1,5 +1,5 @@
 Feature: Login no app Oneplace
-    @test
+
     @login
     Scenario: Login com seleção de carteirinha
         Given que estou na tela de login
