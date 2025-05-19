@@ -1,5 +1,5 @@
 Feature: Acesso ao tempo de espera
-    @test
+
     Scenario: Acessar tempo de espera e recursos próprios
         Given que estou na tela de login
         When preencho CPF e senha corretamente

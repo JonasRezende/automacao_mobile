@@ -23,7 +23,7 @@ class Utils
     end
   end
 
-  # Simula o gesto de arrastar a tela para cima
+  # 🔄 Simula o gesto de arrastar a tela para cima (scroll moderno via Appium)
   def scroll_down
     size = $driver.window_size
 
@@ -35,6 +35,11 @@ class Utils
       direction: 'up',
       percent: 0.8
     })
+  end
+
+  # ✅ Alias para compatibilidade com testes que chamam scroll_para_baixo
+  def scroll_para_baixo
+    scroll_down
   end
 
   # Clica em um elemento com ID
