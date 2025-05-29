@@ -1,10 +1,6 @@
-# Classe com métodos úteis para reutilizar em todo o projeto
 class Utils
-
-  # Espera até que um elemento apareça na tela, podendo ser por :id, :accessibility_id ou :xpath
   def wait_for_element(element, timeout, locator_type = :id)
     wait = Selenium::WebDriver::Wait.new timeout: timeout
-
     wait.until do
       begin
         case locator_type
@@ -23,62 +19,8 @@ class Utils
     end
   end
 
-  # 🔄 Simula o gesto de arrastar a tela para cima (scroll moderno via Appium)
-  def scroll_down
-    size = $driver.window_size
-
-    $driver.execute_script('mobile: swipeGesture', {
-      left: 0,
-      top: size['height'] * 0.6,
-      width: size['width'],
-      height: size['height'] * 0.4,
-      direction: 'up',
-      percent: 0.8
-    })
-  end
-
-  # ✅ Alias para compatibilidade com testes que chamam scroll_para_baixo
-  def scroll_para_baixo
-    scroll_down
-  end
-
-  # Clica em um elemento com ID
-  def click_in_element(element, timeout)
-    wait_for_element(element, timeout, :id)
-    find_element(id: element).click
-  end
-
-  # Digita um valor em um campo (usando ID)
-  def type_text(element, value, timeout)
-    wait_for_element(element, timeout, :id)
-    campo = find_element(:id, element)
-    campo.clear
-    campo.send_keys(value)
-  end
-
-  # Retorna o texto visível de um elemento
-  def get_text(element)
-    find_element(id: element).text
-  end
-
-  # Limpa o conteúdo de um campo
-  def clear_fields(id)
-    find_element(:id, id).clear
-  end
-
-  # Aceita um alerta (por exemplo, "Deseja sair?")
-  def accept_alert
-    $driver.switch_to.alert.accept
-  end
-
-  # Verifica se um elemento com determinado ID está presente na tela
-  def element_is_present?(element)
-    find_elements(:id, element).size > 0
-  end
-
-  # 🔧 Toque absoluto por coordenada (sem associar a elementos)
   def tocar_por_coordenada(x, y)
-    puts "Tocando na coordenada: x=#{x}, y=#{y}"
+    puts "👉 Tocando na coordenada: x=#{x}, y=#{y}"
     $driver.execute_script('mobile: clickGesture', {
       x: x,
       y: y,
@@ -86,4 +28,48 @@ class Utils
     })
   end
 
+  def fechar_teclado
+    puts "🧹 Fechando teclado"
+    begin
+      $driver.hide_keyboard
+    rescue
+      puts "⚠️ Teclado já estava fechado"
+    end
+  end
+
+  def click_in_element(element, timeout)
+    wait_for_element(element, timeout, :id)
+    find_element(id: element).click
+  end
+
+  def get_text(element)
+    find_element(id: element).text
+  end
+
+  def clear_fields(id)
+    find_element(:id, id).clear
+  end
+
+  def accept_alert
+    $driver.switch_to.alert.accept
+  end
+
+  def element_is_present?(element)
+    find_elements(:id, element).size > 0
+  end
+
+  def esperar_edit_text(timeout: 10)
+    Selenium::WebDriver::Wait.new(timeout: timeout).until do
+      edit_texts = find_elements(:class, 'android.widget.EditText')
+      !edit_texts.empty?
+    end
+  rescue
+    raise "❌ Campo de texto não encontrado após #{timeout}s."
+  end
+
+  def wait_for_element_partial_desc(text, timeout = 10)
+    Selenium::WebDriver::Wait.new(timeout: timeout).until {
+      find_elements(:xpath, "//*[contains(@content-desc, '#{text}')]").any?
+    }
+  end
 end

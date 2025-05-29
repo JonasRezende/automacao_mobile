@@ -2,7 +2,7 @@ Feature: Acesso ao tempo de espera
 
     Scenario: Acessar tempo de espera e recursos próprios
         Given que estou na tela de login
-        When preencho CPF e senha corretamente
+        When faço login com CPF "SEU_CPF" e senha "SUA_SENHA"
         And clico no botão de login
         Then seleciono uma carteirinha
         And chego na tela inicial com sucesso
