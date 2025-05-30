@@ -72,4 +72,19 @@ class Utils
       find_elements(:xpath, "//*[contains(@content-desc, '#{text}')]").any?
     }
   end
+def scroll_para_baixo
+  puts "📱 Scroll manual por coordenadas"
+
+  $driver.execute_script('mobile: swipeGesture', {
+    left: 0,
+    top: 0,
+    width: 1080,
+    height: 2076,
+    direction: 'up',
+    percent: 0.85
+  })
+
+  sleep 2
+end
+
 end
