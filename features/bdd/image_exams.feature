@@ -3,7 +3,6 @@ Feature: Image Exams Consultation
         I want to access image exams
         And interact with PDFs and video files
 
-
     Scenario: Access and interact with image exam files
         Given que estou na tela de login
         When preencho CPF e senha corretamente

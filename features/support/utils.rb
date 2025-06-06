@@ -72,19 +72,32 @@ class Utils
       find_elements(:xpath, "//*[contains(@content-desc, '#{text}')]").any?
     }
   end
-def scroll_para_baixo
-  puts "📱 Scroll manual por coordenadas"
 
-  $driver.execute_script('mobile: swipeGesture', {
-    left: 0,
-    top: 0,
-    width: 1080,
-    height: 2076,
-    direction: 'up',
-    percent: 0.85
-  })
+  def scroll_para_baixo
+    puts "📱 Scroll manual por coordenadas"
+    $driver.execute_script('mobile: swipeGesture', {
+      left: 0,
+      top: 0,
+      width: 1080,
+      height: 2076,
+      direction: 'up',
+      percent: 0.85
+    })
+    sleep 2
+  end
 
-  sleep 2
-end
+  def send_text(texto)
+    puts "⌨️ Digitando: #{texto}"
+    $driver.execute_script 'mobile: type', { text: texto }
+  end
 
+  def try_xpath_click_by_content_desc(content_desc)
+    puts "🔍 Procurando e clicando no content-desc: #{content_desc}"
+    begin
+      elemento = find_element(:xpath, "//*[@content-desc='#{content_desc}']")
+      elemento.click
+    rescue Selenium::WebDriver::Error::NoSuchElementError
+      raise "❌ Elemento com content-desc '#{content_desc}' não encontrado."
+    end
+  end
 end

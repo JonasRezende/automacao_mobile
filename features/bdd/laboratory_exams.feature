@@ -1,11 +1,11 @@
 Feature: Laboratory Exams Consultation
-        As a logged-in user
-        I want to access laboratory exams
-        And interact with exam documents and downloads
 
-    @test
     Scenario: Access and interact with a laboratory exam file
-        Given that I am logged in
+        Given que estou na tela de login
+        When preencho CPF e senha corretamente
+        And clico no botão de login
+        Then seleciono uma carteirinha
+        And chego na tela inicial com sucesso
         When I access the Laboratory Exams section
         And I open the lab exam details
         And I open the lab PDF exam
@@ -13,4 +13,3 @@ Feature: Laboratory Exams Consultation
         And I go back from lab screen
         And I go back from lab screen
         And I go back from lab screen
-

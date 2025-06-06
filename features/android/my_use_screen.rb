@@ -2,21 +2,24 @@ require_relative '../support/utils'
 
 class MinhasUtilizacoesScreen < Utils
   def initialize
-    @botao_utilizacoes_bounds = { x: 206, y: 1763 } # bounds [50,1607][363,1920]
-    @botao_pdf_bounds = { x: (913 + 997) / 2, y: (519 + 603) / 2 }        # => { x:955, y:561 }
-    @botao_download_bounds = { x: (936 + 1080) / 2, y: (84 + 228) / 2 }  # => { x:1008, y:156 }
+    @botao_utilizacoes_bounds = { x: 206, y: 1763 }
+    @botao_pdf_bounds = { x: (913 + 997) / 2, y: (519 + 603) / 2 }
+    @botao_download_bounds = { x: (936 + 1080) / 2, y: (84 + 228) / 2 }
     @botao_salvar_desc = "Salvar"
     @botao_mais_opcoes_desc = "Mais opções"
     @botao_voltar_desc = "Voltar"
   end
 
   def acessar_minhas_utilizacoes
-    puts "📄 Acessando Minhas Utilizações (via coordenadas)"
+    puts "📄 Acessando Minhas Utilizações"
     tocar_por_coordenada(@botao_utilizacoes_bounds[:x], @botao_utilizacoes_bounds[:y])
-    sleep 2
+    sleep 3
   end
 
   def clicar_pdf_utilizacao
+    puts "🗂️ Aguardando PDF da utilização aparecer"
+    wait(10) { elemento_presente_por_bounds?(@botao_pdf_bounds[:x], @botao_pdf_bounds[:y]) }
+
     puts "🗂️ Clicando no PDF da utilização"
     tocar_por_coordenada(@botao_pdf_bounds[:x], @botao_pdf_bounds[:y])
     sleep 2
@@ -49,15 +52,8 @@ class MinhasUtilizacoesScreen < Utils
   end
 
   def clicar_botao_baixar
-    puts "⬇️ Clicando no botão 'Baixar' (via bounds validado)"
-
-    # Bounds fornecidos: [484,432][1020,505]
-    x = (484 + 1020) / 2   # => 752
-    y = (432 + 505) / 2    # => 468
-
-    tocar_por_coordenada(x, y)
-
-    puts "✅ Clique no botão 'Baixar' realizado com sucesso"
+    puts "⬇️ Clicando no botão 'Baixar'"
+    tocar_por_coordenada(752, 468)
     sleep 2
   end
 
@@ -69,5 +65,14 @@ class MinhasUtilizacoesScreen < Utils
       puts "⚠️ Botão 'Voltar' não encontrado!"
     end
     sleep 2
+  end
+
+  private
+
+  def elemento_presente_por_bounds?(x, y)
+    $driver.action.move_to(location: { x: x, y: y }).perform
+    true
+  rescue
+    false
   end
 end

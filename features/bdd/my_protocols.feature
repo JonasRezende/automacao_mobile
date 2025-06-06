@@ -3,7 +3,6 @@ Feature: Consulta de Meus Protocolos
     Quero acessar meus protocolos
     E visualizar, baixar arquivos e verificar o status da guia
 
-
     Scenario: Acessar Meus Protocolos e interagir com arquivos e status
         Given que estou na tela de login
         When preencho CPF e senha corretamente
