@@ -1,7 +1,7 @@
 Feature: Consultar Boletos
 
     @consult_bills
-    @test
+
     Scenario: Realizar o fluxo completo de consulta e download de boletos
         Given que estou na tela de login do IRPF
         When preencho CPF e senha corretamente para IRPF
