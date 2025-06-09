@@ -1,5 +1,5 @@
 Feature: Minhas Guias
-    @test
+
     Scenario: Acessar, filtrar e interagir com Minhas Guias
         Given que estou na tela de login IRPF
         When acesso a tela Minhas Guias
