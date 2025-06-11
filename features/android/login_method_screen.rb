@@ -75,16 +75,9 @@ class LoginScreen < Utils
     selecionar_carteirinha_por(@irpf_card_option)
   end
 
-  def selecionar_carteirinha_por(card_option)
-    puts "🪪 Aguardando a carteirinha: #{card_option}"
-    wait_for_element_partial_desc(card_option, 15)
-    sleep 2
-
-    elementos = find_elements(:xpath, "//*[contains(@content-desc, '#{card_option}')]")
-    raise "❌ Carteirinha não encontrada: #{card_option}" if elementos.empty?
-
-    puts "✅ Clicando na carteirinha encontrada"
-    elementos.first.click
+  # NOVO MÉTODO: Seleciona carteirinha ou beneficiário pela descrição
+  def select_card_by_description(description)
+    selecionar_carteirinha_por(description)
   end
 
   def cancel_card_selection
@@ -101,6 +94,18 @@ class LoginScreen < Utils
   end
 
   private
+
+  def selecionar_carteirinha_por(card_option)
+    puts "🪪 Aguardando a carteirinha: #{card_option}"
+    wait_for_element_partial_desc(card_option, 15)
+    sleep 2
+
+    elementos = find_elements(:xpath, "//*[contains(@content-desc, '#{card_option}')]")
+    raise "❌ Carteirinha não encontrada: #{card_option}" if elementos.empty?
+
+    puts "✅ Clicando na carteirinha encontrada"
+    elementos.first.click
+  end
 
   def esperar_edit_text(timeout: 10)
     Selenium::WebDriver::Wait.new(timeout: timeout).until {

@@ -29,6 +29,17 @@ When('preencho CPF e senha corretamente para IRPF') do
   login.fill_password(senha)
 end
 
+# ✅ Login específico para Gestão de Dependente
+When('preencho CPF e senha para gestao de dependente') do
+  puts 'Preenchendo CPF e Senha para Gestão de Dependente'
+
+  cpf = '08610522695'
+  senha = 'unimed21'
+
+  login.fill_cpf(cpf)
+  login.fill_password(senha)
+end
+
 And('clico no botão de login') do
   puts 'Clicando no botão Enter (login)'
   login.disable_card
@@ -41,6 +52,11 @@ end
 
 Then('seleciono a carteirinha do IRPF') do
   login.select_card_irpf
+end
+
+Then('seleciono beneficiário e carteirinha de dependente') do
+  login.select_card_by_description('Joao Lucas r Beirigo')
+  login.select_card_by_description('REG-PP-PJ-AMBHOSP-OBST-RB-E-PARTICIPATIVO')
 end
 
 Then('cancelo a seleção de carteirinha') do
