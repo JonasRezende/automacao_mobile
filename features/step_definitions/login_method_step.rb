@@ -18,6 +18,17 @@ When('preencho CPF e senha corretamente') do
   login.fill_password(senha)
 end
 
+# ✅ NOVO: Login com a nova senha após redefinição
+When('preencho CPF e nova senha') do
+  puts 'Preenchendo CPF com nova senha após redefinição'
+
+  cpf = DATABASE[:user][:cpf]
+  nova_senha = 'Unimed@2025'
+
+  login.fill_cpf(cpf)
+  login.fill_password(nova_senha)
+end
+
 # ✅ Login específico para IRPF
 When('preencho CPF e senha corretamente para IRPF') do
   puts 'Preenchendo CPF e Senha para IRPF'
