@@ -1,8 +1,7 @@
 Feature: Meu Prontuário
 
     @my_medical_record
-    @test
-    Scenario: Acessar, aplicar filtros e compartilhar Meu Prontuário
+        Scenario: Acessar, aplicar filtros e compartilhar Meu Prontuário
         Given que estou na tela de login
         When preencho CPF e senha corretamente
         And clico no botão de login
