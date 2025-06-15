@@ -1,6 +1,6 @@
 Feature: Waiting Period
 
-  @waiting_period @test
+  @waiting_period
   Scenario: Acessar a tela de carências e voltar
     Given que estou na tela de login
     When preencho CPF e senha corretamente
