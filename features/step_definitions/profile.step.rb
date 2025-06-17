@@ -7,15 +7,14 @@ Before do
 end
 
 Given('que estou logado como gestao de dependente') do
-  # Removi a inicialização de 'login' aqui, pois ela deve ser feita no 'Before'
-  @login.open_access_options # Use @login
-  @login.choose_client_access # Use @login
-  @login.access_app # Use @login
-  @login.fill_cpf('08610522695') # Use @login
-  @login.fill_password('unimed21') # Use @login
-  @login.disable_card # Use @login
-  @login.select_card_by_description('Joao Lucas r Beirigo') # Use @login
-  @login.select_card_by_description('REG-PP-PJ-AMBHOSP-OBST-RB-E-PARTICIPATIVO') # Use @login
+  @login.open_access_options
+  @login.choose_client_access
+  @login.access_app
+  @login.fill_cpf('08610522695')
+  @login.fill_password('unimed21')
+  @login.disable_card
+  @login.select_beneficiary("Joao Lucas Rodrigues Beirigo\nPróprio Responsável") # <- AQUI É O AJUSTE
+  @login.select_card_by_description('REG-PP-PJ-AMBHOSP-OBST-RB-E-PARTICIPATIVO')
 end
 
 When('acesso a tela Meu Perfil') do

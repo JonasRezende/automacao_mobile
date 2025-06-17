@@ -66,7 +66,8 @@ Then('seleciono a carteirinha do IRPF') do
 end
 
 Then('seleciono beneficiário e carteirinha de dependente') do
-  login.select_card_by_description('Joao Lucas r Beirigo')
+  login.select_beneficiary('Joao Lucas Rodrigues Beirigo Próprio Responsável')
+  sleep 1
   login.select_card_by_description('REG-PP-PJ-AMBHOSP-OBST-RB-E-PARTICIPATIVO')
 end
 

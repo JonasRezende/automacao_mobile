@@ -7,12 +7,9 @@ class LoginScreen < Utils
     @disable_card = 'Não habilitar'
     @cancel_button = 'Cancelar'
 
-    # Carteirinha padrão (para os fluxos normais)
     @default_card_option = 'REG-PP-PJ-AMBHOSP-OBST-RB-E-PART-UNICOS-COLABORADOR-UNIMED'
-    # Carteirinha específica para IRPF
     @irpf_card_option = 'REG-AD-PJ-AMBHOSP-OBST-RB-A-PARTICIPATIVO-PLAC'
 
-    # Coordenadas dos campos
     @cpf_bounds = { x: 540, y: 1600 }
     @password_bounds = { x: 540, y: 1606 }
     @enter_bounds = { x: 958, y: 1953 }
@@ -65,19 +62,25 @@ class LoginScreen < Utils
     sleep 2
   end
 
-  # Seleciona carteirinha padrão (fluxo normal)
   def select_card
     selecionar_carteirinha_por(@default_card_option)
   end
 
-  # Seleciona carteirinha específica para IRPF
   def select_card_irpf
     selecionar_carteirinha_por(@irpf_card_option)
   end
 
-  # NOVO MÉTODO: Seleciona carteirinha ou beneficiário pela descrição
   def select_card_by_description(description)
     selecionar_carteirinha_por(description)
+  end
+
+  def select_beneficiary(description)
+    puts "👤 Aguardando beneficiário: #{description}"
+    wait_for_element_partial_desc(description, 15)
+    elementos = find_elements(:xpath, "//*[contains(@content-desc, '#{description}')]")
+    raise "❌ Beneficiário não encontrado: #{description}" if elementos.empty?
+    puts "✅ Clicando no beneficiário"
+    elementos.first.click
   end
 
   def cancel_card_selection
@@ -99,10 +102,8 @@ class LoginScreen < Utils
     puts "🪪 Aguardando a carteirinha: #{card_option}"
     wait_for_element_partial_desc(card_option, 15)
     sleep 2
-
     elementos = find_elements(:xpath, "//*[contains(@content-desc, '#{card_option}')]")
     raise "❌ Carteirinha não encontrada: #{card_option}" if elementos.empty?
-
     puts "✅ Clicando na carteirinha encontrada"
     elementos.first.click
   end
