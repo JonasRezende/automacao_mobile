@@ -1,6 +1,6 @@
 Feature: My Appointments
 
-  @my_appointments
+
   Scenario: Filtrar e desmarcar agendamento
     Given que estou na tela de login
     When preencho CPF e senha corretamente
