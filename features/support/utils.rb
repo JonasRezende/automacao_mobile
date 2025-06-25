@@ -100,4 +100,9 @@ class Utils
       raise "❌ Elemento com content-desc '#{content_desc}' não encontrado."
     end
   end
+  def tocar_por_content_desc(desc)
+    puts "🔎 Tocando no elemento com content-desc: #{desc}"
+    find_element(accessibility_id: desc).click
+  end
 end
+
