@@ -10,9 +10,11 @@ class LoginScreen < Utils
     @default_card_option = 'REG-PP-PJ-AMBHOSP-OBST-RB-E-PART-UNICOS-COLABORADOR-UNIMED'
     @irpf_card_option = 'REG-AD-PJ-AMBHOSP-OBST-RB-A-PARTICIPATIVO-PLAC'
 
-    @cpf_bounds = { x: 540, y: 1600 }
-    @password_bounds = { x: 540, y: 1606 }
-    @enter_bounds = { x: 958, y: 1953 }
+    # ✅ Bounds revisados e confirmados
+    @cpf_bounds = { x: 540, y: 1629 }
+    @password_bounds = { x: 540, y: 1629 }
+    @enter_cpf_bounds = { x: 958, y: 1882 }
+    @enter_password_bounds = { x: 958, y: 1882 }  # Novo bound do Enter após senha
   end
 
   def open_access_options
@@ -42,7 +44,10 @@ class LoginScreen < Utils
     sleep 1
 
     fechar_teclado
-    tocar_por_coordenada(@enter_bounds[:x], @enter_bounds[:y])
+    sleep 1
+
+    puts "👉 Clicando no botão Enter após CPF"
+    tocar_por_coordenada(@enter_cpf_bounds[:x], @enter_cpf_bounds[:y])
     sleep 2
   end
 
@@ -53,12 +58,14 @@ class LoginScreen < Utils
     sleep 1
 
     puts "🔐 Digitando Senha"
-    campos = find_elements(:class, 'android.widget.EditText')
-    raise "❌ Campo de senha não encontrado" if campos.size < 2
-    campos[1].send_keys(password)
+    $driver.action.send_keys(password).perform
+    sleep 1
 
     fechar_teclado
-    tocar_por_coordenada(@enter_bounds[:x], @enter_bounds[:y])
+    sleep 1
+
+    puts "👉 Clicando no botão Enter após Senha"
+    tocar_por_coordenada(@enter_password_bounds[:x], @enter_password_bounds[:y])
     sleep 2
   end
 

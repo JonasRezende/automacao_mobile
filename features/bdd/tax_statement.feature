@@ -3,6 +3,7 @@ Feature: Consulta de Demonstrativo de IRPF
     Quero acessar meu Demonstrativo de IRPF
     E visualizar ou baixar o PDF do demonstrativo
 
+    @test
     Scenario: Acessar o Demonstrativo e baixar o PDF
         Given que estou na tela de login
         When preencho CPF e senha corretamente para IRPF
